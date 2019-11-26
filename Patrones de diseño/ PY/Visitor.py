@@ -2,7 +2,7 @@
                         Patron de diseño Visitor        '''
 from __future__ import generators
 import random
-
+from abc import ABC, abstractmethod
 
 class Coral(object):
     def aceptar(self, visitor):
@@ -24,9 +24,10 @@ class StylasterRoseus(Coral):
 
 
 # ---------------  Visitor  ---------------------
-class Visitor:
+class Visitor(ABC, object):
+    @abstractmethod
     def __str__(self):
-        return self.__class__.__name__
+        pass
 
 # -----------------------------------------------
 class CriaturaMarina(Visitor): pass
@@ -34,15 +35,21 @@ class Pez(CriaturaMarina): pass
 class Depredador(CriaturaMarina): pass
 
 class Mandarin(Pez):
+    def __str__(self):
+        return self.__class__.__name__
     def visit(self, coral):
         coral.habitar(self)
 
 class Payaso(Pez):
+    def __str__(self):
+        return self.__class__.__name__
     def visit(self, coral):
         coral.habitar(self)
 
 
 class EstrellaMar(Depredador):
+    def __str__(self):
+        return self.__class__.__name__
     def visit(self, coral):
         coral.comer(self)
 
@@ -59,3 +66,4 @@ for coral in CoralH(4):
     coral.aceptar(payaso)
     coral.aceptar(mandarin)
     coral.aceptar(estrella)
+
